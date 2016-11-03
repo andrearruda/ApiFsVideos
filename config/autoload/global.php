@@ -5,7 +5,7 @@ return [
     ],
     'db' => [
         'adapters' => [
-            'fs_api_videos' => [],
+            'DbAdapter' => [],
         ],
     ],
 ];

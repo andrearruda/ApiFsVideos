@@ -116,7 +116,7 @@ return [
             'service_name' => 'media_image',
         ],
         'ApiFsVideos\\V1\\Rest\\MediaCategory\\Controller' => [
-            'listener' => 'ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryResource',
+            'listener' => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class,
             'route_name' => 'api-fs-videos.rest.media-category',
             'route_identifier_name' => 'media_category_id',
             'collection_name' => 'media_category',
@@ -130,7 +130,9 @@ return [
                 0 => 'GET',
                 1 => 'POST',
             ],
-            'collection_query_whitelist' => [],
+            'collection_query_whitelist' => [
+                0 => 'test',
+            ],
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryEntity::class,
@@ -241,7 +243,7 @@ return [
     'zf-apigility' => [
         'db-connected' => [
             'ApiFsVideos\\V1\\Rest\\Media\\MediaResource' => [
-                'adapter_name' => 'fs_api_videos',
+                'adapter_name' => 'DbAdapter',
                 'table_name' => 'media',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\Media\\Controller',
@@ -249,7 +251,7 @@ return [
                 'table_service' => 'ApiFsVideos\\V1\\Rest\\Media\\MediaResource\\Table',
             ],
             'ApiFsVideos\\V1\\Rest\\MediaVideo\\MediaVideoResource' => [
-                'adapter_name' => 'fs_api_videos',
+                'adapter_name' => 'DbAdapter',
                 'table_name' => 'media_video',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaVideo\\Controller',
@@ -257,15 +259,15 @@ return [
                 'table_service' => 'ApiFsVideos\\V1\\Rest\\MediaVideo\\MediaVideoResource\\Table',
             ],
             'ApiFsVideos\\V1\\Rest\\MediaImage\\MediaImageResource' => [
-                'adapter_name' => 'fs_api_videos',
+                'adapter_name' => 'DbAdapter',
                 'table_name' => 'media_image',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\Controller',
                 'entity_identifier_name' => 'id',
                 'table_service' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\MediaImageResource\\Table',
             ],
-            'ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryResource' => [
-                'adapter_name' => 'fs_api_videos',
+            \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class => [
+                'adapter_name' => 'DbAdapter',
                 'table_name' => 'media_category',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaCategory\\Controller',
@@ -305,7 +307,7 @@ return [
                     0 => [
                         'name' => 'ZF\\ContentValidation\\Validator\\DbRecordExists',
                         'options' => [
-                            'adapter' => 'fs_api_videos',
+                            'adapter' => 'DbAdapter',
                             'table' => 'media',
                             'field' => 'id',
                         ],
@@ -392,7 +394,7 @@ return [
                     0 => [
                         'name' => 'ZF\\ContentValidation\\Validator\\DbRecordExists',
                         'options' => [
-                            'adapter' => 'fs_api_videos',
+                            'adapter' => 'DbAdapter',
                             'table' => 'media_category',
                             'field' => 'id',
                         ],
@@ -489,7 +491,7 @@ return [
                     0 => [
                         'name' => 'ZF\\ContentValidation\\Validator\\DbRecordExists',
                         'options' => [
-                            'adapter' => 'fs_api_videos',
+                            'adapter' => 'DbAdapter',
                             'table' => 'media',
                             'field' => 'id',
                         ],
@@ -613,6 +615,13 @@ return [
                 ],
                 'validators' => [],
             ],
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResourceFactory::class,
+            \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepository::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepositoryFactory::class,
+            'ApiFsVideos\\V1\\Rest\\MediaCategory\\TableGateway' => \ApiFsVideos\V1\Rest\MediaCategory\TableGatewayFactory::class
         ],
     ],
 ];
