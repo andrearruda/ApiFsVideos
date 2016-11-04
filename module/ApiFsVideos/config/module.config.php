@@ -584,15 +584,17 @@ return [
             ],
             1 => [
                 'name' => 'created_at',
-                'required' => true,
+                'required' => false,
                 'filters' => [],
                 'validators' => [],
+                'continue_if_empty' => false,
             ],
             2 => [
                 'name' => 'updated_at',
-                'required' => true,
+                'required' => false,
                 'filters' => [],
                 'validators' => [],
+                'continue_if_empty' => false,
             ],
             3 => [
                 'name' => 'deleted_at',
@@ -602,7 +604,7 @@ return [
             ],
             4 => [
                 'name' => 'active',
-                'required' => true,
+                'required' => false,
                 'filters' => [
                     0 => [
                         'name' => \Zend\Filter\StripTags::class,
@@ -612,6 +614,7 @@ return [
                     ],
                 ],
                 'validators' => [],
+                'continue_if_empty' => false,
             ],
         ],
     ],

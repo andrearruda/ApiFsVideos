@@ -3,9 +3,6 @@
 namespace ApiFsVideos\V1\Rest\MediaCategory;
 
 use Interop\Container\ContainerInterface;
-use Interop\Container\Exception\ContainerException;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 class MediaCategoryResourceFactory implements FactoryInterface

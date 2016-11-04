@@ -13,19 +13,48 @@ class MediaCategoryService
     {
         $this->mediaCategoryRepository = $mediaCategoryRepository;
         $this->tableGateway = $tableGateway;
+    }
 
+    public function created($data)
+    {
+        $connection = null;
+        try{
+            $connection = $this->tableGateway->getAdapter()->getDriver()->getConnection();
+            $connection->beginTransaction();
+            $result = $this->mediaCategoryRepository->insert($data);
+            $connection->commit();
+
+            return array('id' => $result);
+        }catch (\Exception $e){
+            if ($connection instanceof \Zend\Db\Adapter\Driver\ConnectionInterface) {
+                $connection->rollback();
+            }
+            return $e;
+        }
     }
 
     public function update($id, $data)
     {
+        $connection = null;
+        try{
+            $connection = $this->tableGateway->getAdapter()->getDriver()->getConnection();
+            $connection->beginTransaction();
+            $result = $this->mediaCategoryRepository->update($data, $id);
+            $connection->commit();
 
+            return array('id' => $result);
+        }catch (\Exception $e){
+            if ($connection instanceof \Zend\Db\Adapter\Driver\ConnectionInterface) {
+                $connection->rollback();
+            }
+            return $e;
+        }
     }
 
     public function delete($id)
     {
-        $connection = null;
         $mediaCategoryEntity = $this->mediaCategoryRepository->find($id);
-
+        $connection = null;
         try{
             if(!$mediaCategoryEntity instanceof \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryEntity)
             {
@@ -40,7 +69,6 @@ class MediaCategoryService
             }
 
             return true;
-
         }catch (\Exception $e){
             if ($connection instanceof \Zend\Db\Adapter\Driver\ConnectionInterface) {
                 $connection->rollback();

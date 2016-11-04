@@ -3,7 +3,6 @@
 namespace ApiFsVideos\V1\Rest\MediaCategory;
 
 use ZF\Rest\AbstractResourceListener;
-use ZF\ApiProblem\ApiProblem;
 
 class MediaCategoryResource extends AbstractResourceListener
 {
@@ -16,33 +15,19 @@ class MediaCategoryResource extends AbstractResourceListener
         $this->mediaCategoryService = $mediaCategoryService;
     }
 
-    /**
-     * Create a resource
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        return $this->mediaCategoryService->created($data);
     }
 
     public function delete($id)
     {
-        $result = $this->mediaCategoryService->delete($id);
-
-        return $result;
+        return $this->mediaCategoryService->delete($id);
     }
 
-    /**
-     * Delete a collection, or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function deleteList($data)
+    public function update($id, $data)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for collections');
+        return $this->mediaCategoryService->update($id, $data);
     }
 
     public function fetch($id)
@@ -50,55 +35,8 @@ class MediaCategoryResource extends AbstractResourceListener
         return $this->mediaCategoryRepository->find($id);
     }
 
-
     public function fetchAll($params = [])
     {
         return $this->mediaCategoryRepository->findAll();
-    }
-
-    /**
-     * Patch (partial in-place update) a resource
-     *
-     * @param  mixed $id
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function patch($id, $data)
-    {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
-    }
-
-    /**
-     * Patch (partial in-place update) a collection or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function patchList($data)
-    {
-        return new ApiProblem(405, 'The PATCH method has not been defined for collections');
-    }
-
-    /**
-     * Replace a collection or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function replaceList($data)
-    {
-        return new ApiProblem(405, 'The PUT method has not been defined for collections');
-    }
-
-    /**
-     * Update a resource
-     *
-     * @param  mixed $id
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function update($id, $data)
-    {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }
