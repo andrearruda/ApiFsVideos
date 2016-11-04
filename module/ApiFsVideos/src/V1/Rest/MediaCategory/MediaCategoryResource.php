@@ -8,10 +8,12 @@ use ZF\ApiProblem\ApiProblem;
 class MediaCategoryResource extends AbstractResourceListener
 {
     private $mediaCategoryRepository;
+    private $mediaCategoryService;
 
-    public function __construct(MediaCategoryRepository $mediaCategoryRepository)
+    public function __construct(MediaCategoryRepository $mediaCategoryRepository, MediaCategoryService $mediaCategoryService)
     {
         $this->mediaCategoryRepository = $mediaCategoryRepository;
+        $this->mediaCategoryService = $mediaCategoryService;
     }
 
     /**
@@ -25,15 +27,11 @@ class MediaCategoryResource extends AbstractResourceListener
         return new ApiProblem(405, 'The POST method has not been defined');
     }
 
-    /**
-     * Delete a resource
-     *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
-     */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $result = $this->mediaCategoryService->delete($id);
+
+        return $result;
     }
 
     /**
@@ -47,15 +45,9 @@ class MediaCategoryResource extends AbstractResourceListener
         return new ApiProblem(405, 'The DELETE method has not been defined for collections');
     }
 
-    /**
-     * Fetch a resource
-     *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
-     */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        return $this->mediaCategoryRepository->find($id);
     }
 
 

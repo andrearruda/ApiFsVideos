@@ -8,14 +8,13 @@ use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class MediaCategoryResourceFactory implements FactoryInterface
+class MediaCategoryServiceFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $mediaCategoryRepository = $container->get('ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryRepository');
-        $mediaCategoryService = $container->get('ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryService');
+        $tableGateway = $container->get('ApiFsVideos\\V1\\Rest\\MediaCategory\\TableGateway');
 
-        return new MediaCategoryResource($mediaCategoryRepository, $mediaCategoryService);
+        return new MediaCategoryService($mediaCategoryRepository, $tableGateway);
     }
-
 }

@@ -130,9 +130,7 @@ return [
                 0 => 'GET',
                 1 => 'POST',
             ],
-            'collection_query_whitelist' => [
-                0 => 'test',
-            ],
+            'collection_query_whitelist' => [],
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryEntity::class,
@@ -230,7 +228,7 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'api-fs-videos.rest.media-category',
                 'route_identifier_name' => 'media_category_id',
-                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+                'hydrator' => \Zend\Hydrator\ClassMethods::class,
             ],
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryCollection::class => [
                 'entity_identifier_name' => 'id',
@@ -269,7 +267,7 @@ return [
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class => [
                 'adapter_name' => 'DbAdapter',
                 'table_name' => 'media_category',
-                'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
+                'hydrator_name' => \Zend\Hydrator\ClassMethods::class,
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaCategory\\Controller',
                 'entity_identifier_name' => 'id',
                 'table_service' => 'ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryResource\\Table',
@@ -621,7 +619,8 @@ return [
         'factories' => [
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResourceFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepository::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepositoryFactory::class,
-            'ApiFsVideos\\V1\\Rest\\MediaCategory\\TableGateway' => \ApiFsVideos\V1\Rest\MediaCategory\TableGatewayFactory::class
+            \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryService::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryServiceFactory::class,
+            'ApiFsVideos\\V1\\Rest\\MediaCategory\\TableGateway' => \ApiFsVideos\V1\Rest\MediaCategory\TableGatewayFactory::class,
         ],
     ],
 ];
