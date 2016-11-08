@@ -13,10 +13,6 @@ class MediaEntity extends ArrayObject
     private $created_at, $updated_at, $deleted_at;
     private $active;
 
-    public function __construct()
-    {
-    }
-
     /**
      * @return mixed
      */
@@ -50,6 +46,24 @@ class MediaEntity extends ArrayObject
     public function setMediaCategoryId($media_category_id)
     {
         $this->media_category_id = $media_category_id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMediaCategory()
+    {
+        return $this->media_category;
+    }
+
+    /**
+     * @param mixed $media_category
+     * @return MediaEntity
+     */
+    public function setMediaCategory($media_category)
+    {
+        $this->media_category = $media_category;
         return $this;
     }
 

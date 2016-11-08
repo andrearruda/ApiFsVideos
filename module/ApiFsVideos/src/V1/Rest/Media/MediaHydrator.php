@@ -10,7 +10,7 @@ class MediaHydrator extends ClassMethods
     {
         return array(
             'id' => $object->getId(),
-            'media_category_id' => $object->getMediaCategoryId(),
+            'media_category' => $object->getMediaCategory(),
             'name' => $object->getName(),
             'description' => $object->getDescription(),
             'created_at' => $object->getCreatedAt(),
