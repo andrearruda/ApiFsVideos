@@ -7,7 +7,7 @@ class MediaEntity extends ArrayObject
 {
     private $id;
     private $media_category_id;
-    private $media_category;
+    private $media_category, $media_image, $media_video;
     private $name;
     private $description;
     private $created_at, $updated_at, $deleted_at;
@@ -46,24 +46,6 @@ class MediaEntity extends ArrayObject
     public function setMediaCategoryId($media_category_id)
     {
         $this->media_category_id = $media_category_id;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMediaCategory()
-    {
-        return $this->media_category;
-    }
-
-    /**
-     * @param mixed $media_category
-     * @return MediaEntity
-     */
-    public function setMediaCategory($media_category)
-    {
-        $this->media_category = $media_category;
         return $this;
     }
 
@@ -172,6 +154,60 @@ class MediaEntity extends ArrayObject
     public function setActive($active)
     {
         $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMediaCategory()
+    {
+        return $this->media_category;
+    }
+
+    /**
+     * @param mixed $media_category
+     * @return MediaEntity
+     */
+    public function setMediaCategory($media_category)
+    {
+        $this->media_category = $media_category;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMediaImage()
+    {
+        return $this->media_image;
+    }
+
+    /**
+     * @param mixed $media_image
+     * @return MediaEntity
+     */
+    public function setMediaImage($media_image)
+    {
+        $this->media_image = $media_image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMediaVideo()
+    {
+        return $this->media_video;
+    }
+
+    /**
+     * @param mixed $media_video
+     * @return MediaEntity
+     */
+    public function setMediaVideo($media_video)
+    {
+        $this->media_video = $media_video;
         return $this;
     }
 }

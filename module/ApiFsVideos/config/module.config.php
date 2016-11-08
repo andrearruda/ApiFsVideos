@@ -629,6 +629,11 @@ return [
             \ApiFsVideos\V1\Rest\Media\MediaRepository::class => \ApiFsVideos\V1\Rest\Media\MediaRepositoryFactory::class,
             \ApiFsVideos\V1\Rest\Media\MediaService::class => \ApiFsVideos\V1\Rest\Media\MediaServiceFactory::class,
             \ApiFsVideos\V1\Rest\Media\TableGateway::class => \ApiFsVideos\V1\Rest\Media\TableGatewayFactory::class,
+
+            \ApiFsVideos\V1\Rest\MediaImage\MediaImageResource::class => \ApiFsVideos\V1\Rest\MediaImage\MediaImageResourceFactory::class,
+            \ApiFsVideos\V1\Rest\MediaImage\MediaImageRepository::class => \ApiFsVideos\V1\Rest\MediaImage\MediaImageRepositoryFactory::class,
+            \ApiFsVideos\V1\Rest\MediaImage\MediaImageService::class => \ApiFsVideos\V1\Rest\MediaImage\MediaImageServiceFactory::class,
+            \ApiFsVideos\V1\Rest\MediaImage\TableGateway::class => \ApiFsVideos\V1\Rest\MediaImage\TableGatewayFactory::class,
         ],
     ],
 ];
