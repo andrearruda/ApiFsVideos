@@ -7,10 +7,15 @@ class MediaEntity extends ArrayObject
 {
     private $id;
     private $media_category_id;
+    private $media_category;
     private $name;
     private $description;
     private $created_at, $updated_at, $deleted_at;
     private $active;
+
+    public function __construct()
+    {
+    }
 
     /**
      * @return mixed
