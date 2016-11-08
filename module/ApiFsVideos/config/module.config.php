@@ -50,7 +50,7 @@ return [
     ],
     'zf-rest' => [
         'ApiFsVideos\\V1\\Rest\\Media\\Controller' => [
-            'listener' => 'ApiFsVideos\\V1\\Rest\\Media\\MediaResource',
+            'listener' => \ApiFsVideos\V1\Rest\Media\MediaResource::class,
             'route_name' => 'api-fs-videos.rest.media',
             'route_identifier_name' => 'media_id',
             'collection_name' => 'media',
@@ -192,7 +192,7 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'api-fs-videos.rest.media',
                 'route_identifier_name' => 'media_id',
-                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+                'hydrator' => \ApiFsVideos\V1\Rest\Media\MediaHydrator::class,
             ],
             \ApiFsVideos\V1\Rest\Media\MediaCollection::class => [
                 'entity_identifier_name' => 'id',
@@ -228,7 +228,7 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'api-fs-videos.rest.media-category',
                 'route_identifier_name' => 'media_category_id',
-                'hydrator' => ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryHydrator::class,
+                'hydrator' => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryHydrator::class,
             ],
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryCollection::class => [
                 'entity_identifier_name' => 'id',
@@ -240,7 +240,7 @@ return [
     ],
     'zf-apigility' => [
         'db-connected' => [
-            'ApiFsVideos\\V1\\Rest\\Media\\MediaResource' => [
+            \ApiFsVideos\V1\Rest\Media\MediaResource::class => [
                 'adapter_name' => 'DbAdapter',
                 'table_name' => 'media',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
@@ -443,13 +443,13 @@ return [
             ],
             3 => [
                 'name' => 'created_at',
-                'required' => true,
+                'required' => false,
                 'filters' => [],
                 'validators' => [],
             ],
             4 => [
                 'name' => 'updated_at',
-                'required' => true,
+                'required' => false,
                 'filters' => [],
                 'validators' => [],
             ],
@@ -461,7 +461,7 @@ return [
             ],
             6 => [
                 'name' => 'active',
-                'required' => true,
+                'required' => false,
                 'filters' => [
                     0 => [
                         'name' => \Zend\Filter\StripTags::class,
@@ -624,6 +624,11 @@ return [
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepository::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepositoryFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryService::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryServiceFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\TableGateway::class => \ApiFsVideos\V1\Rest\MediaCategory\TableGatewayFactory::class,
+
+            \ApiFsVideos\V1\Rest\Media\MediaResource::class => \ApiFsVideos\V1\Rest\Media\MediaResourceFactory::class,
+            \ApiFsVideos\V1\Rest\Media\MediaRepository::class => \ApiFsVideos\V1\Rest\Media\MediaRepositoryFactory::class,
+            \ApiFsVideos\V1\Rest\Media\MediaService::class => \ApiFsVideos\V1\Rest\Media\MediaServiceFactory::class,
+            \ApiFsVideos\V1\Rest\Media\TableGateway::class => \ApiFsVideos\V1\Rest\Media\TableGatewayFactory::class,
         ],
     ],
 ];
