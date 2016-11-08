@@ -20,6 +20,7 @@ class MediaRepository
         $media = $this->tableGateway->select(function(\Zend\Db\Sql\Select $select) use ($id){
             $select->columns(array(
                 'id',
+                'media_category_id',
                 'name',
                 'description',
                 'created_at', 'updated_at',
@@ -36,7 +37,9 @@ class MediaRepository
         $media = $this->tableGateway->select(function(\Zend\Db\Sql\Select $select){
             $select->columns(array(
                 'id',
+                'media_category_id',
                 'name',
+                'description',
                 'created_at', 'updated_at',
                 'active'
             ));
