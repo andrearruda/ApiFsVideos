@@ -94,7 +94,7 @@ return [
             'service_name' => 'media_video',
         ],
         'ApiFsVideos\\V1\\Rest\\MediaImage\\Controller' => [
-            'listener' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\MediaImageResource',
+            'listener' => \ApiFsVideos\V1\Rest\MediaImage\MediaImageResource::class,
             'route_name' => 'api-fs-videos.rest.media-image',
             'route_identifier_name' => 'media_image_id',
             'collection_name' => 'media_image',
@@ -213,13 +213,13 @@ return [
                 'is_collection' => true,
             ],
             \ApiFsVideos\V1\Rest\MediaImage\MediaImageEntity::class => [
-                'entity_identifier_name' => 'id',
+                'entity_identifier_name' => 'media_id',
                 'route_name' => 'api-fs-videos.rest.media-image',
                 'route_identifier_name' => 'media_image_id',
                 'hydrator' => \Zend\Hydrator\ArraySerializable::class,
             ],
             \ApiFsVideos\V1\Rest\MediaImage\MediaImageCollection::class => [
-                'entity_identifier_name' => 'id',
+                'entity_identifier_name' => 'media_id',
                 'route_name' => 'api-fs-videos.rest.media-image',
                 'route_identifier_name' => 'media_image_id',
                 'is_collection' => true,
@@ -256,12 +256,12 @@ return [
                 'entity_identifier_name' => 'id',
                 'table_service' => 'ApiFsVideos\\V1\\Rest\\MediaVideo\\MediaVideoResource\\Table',
             ],
-            'ApiFsVideos\\V1\\Rest\\MediaImage\\MediaImageResource' => [
+            \ApiFsVideos\V1\Rest\MediaImage\MediaImageResource::class => [
                 'adapter_name' => 'DbAdapter',
                 'table_name' => 'media_image',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\Controller',
-                'entity_identifier_name' => 'id',
+                'entity_identifier_name' => 'media_id',
                 'table_service' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\MediaImageResource\\Table',
             ],
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class => [
@@ -622,18 +622,16 @@ return [
         'factories' => [
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResourceFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepository::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepositoryFactory::class,
+            'ApiFsVideos\\V1\\Rest\\MediaCategory\\TableGateway' => \ApiFsVideos\V1\Rest\MediaCategory\TableGatewayFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryService::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryServiceFactory::class,
-            \ApiFsVideos\V1\Rest\MediaCategory\TableGateway::class => \ApiFsVideos\V1\Rest\MediaCategory\TableGatewayFactory::class,
-
             \ApiFsVideos\V1\Rest\Media\MediaResource::class => \ApiFsVideos\V1\Rest\Media\MediaResourceFactory::class,
             \ApiFsVideos\V1\Rest\Media\MediaRepository::class => \ApiFsVideos\V1\Rest\Media\MediaRepositoryFactory::class,
-            \ApiFsVideos\V1\Rest\Media\MediaService::class => \ApiFsVideos\V1\Rest\Media\MediaServiceFactory::class,
-            \ApiFsVideos\V1\Rest\Media\TableGateway::class => \ApiFsVideos\V1\Rest\Media\TableGatewayFactory::class,
-
+            'ApiFsVideos\\V1\\Rest\\Media\\TableGateway' => \ApiFsVideos\V1\Rest\Media\TableGatewayFactory::class,
+            'ApiFsVideos\\V1\\Rest\\Media\\MediaService' => 'ApiFsVideos\\V1\\Rest\\Media\\MediaServiceFactory',
             \ApiFsVideos\V1\Rest\MediaImage\MediaImageResource::class => \ApiFsVideos\V1\Rest\MediaImage\MediaImageResourceFactory::class,
             \ApiFsVideos\V1\Rest\MediaImage\MediaImageRepository::class => \ApiFsVideos\V1\Rest\MediaImage\MediaImageRepositoryFactory::class,
-            \ApiFsVideos\V1\Rest\MediaImage\MediaImageService::class => \ApiFsVideos\V1\Rest\MediaImage\MediaImageServiceFactory::class,
-            \ApiFsVideos\V1\Rest\MediaImage\TableGateway::class => \ApiFsVideos\V1\Rest\MediaImage\TableGatewayFactory::class,
+            'ApiFsVideos\\V1\\Rest\\MediaImage\\TableGateway' => \ApiFsVideos\V1\Rest\MediaImage\TableGatewayFactory::class,
+            'ApiFsVideos\\V1\\Rest\\MediaImage\\MediaImageService' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\MediaImageServiceFactory',
         ],
     ],
 ];

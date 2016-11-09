@@ -5,7 +5,7 @@ use ArrayObject;
 
 class MediaImageEntity extends ArrayObject
 {
-    private $id;
+    private $media_id;
     private $name;
     private $type;
     private $path;
@@ -13,18 +13,18 @@ class MediaImageEntity extends ArrayObject
     /**
      * @return mixed
      */
-    public function getId()
+    public function getMediaId()
     {
-        return $this->id;
+        return $this->media_id;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $media_id
      * @return MediaImageEntity
      */
-    public function setId($id)
+    public function setMediaId($media_id)
     {
-        $this->id = $id;
+        $this->media_id = $media_id;
         return $this;
     }
 
