@@ -29,6 +29,15 @@ return [
                     ],
                 ],
             ],
+            'api-fs-videos.rest.media-video' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/media_video[/:media_video_id]',
+                    'defaults' => [
+                        'controller' => 'ApiFsVideos\\V1\\Rest\\MediaVideo\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'zf-versioning' => [
@@ -36,6 +45,7 @@ return [
             0 => 'api-fs-videos.rest.media',
             3 => 'api-fs-videos.rest.media-category',
             4 => 'api-fs-videos.rest.media-image',
+            5 => 'api-fs-videos.rest.media-video',
         ],
     ],
     'zf-rest' => [
@@ -105,12 +115,35 @@ return [
             'collection_class' => \ApiFsVideos\V1\Rest\MediaImage\MediaImageCollection::class,
             'service_name' => 'media_image',
         ],
+        'ApiFsVideos\\V1\\Rest\\MediaVideo\\Controller' => [
+            'listener' => 'ApiFsVideos\\V1\\Rest\\MediaVideo\\MediaVideoResource',
+            'route_name' => 'api-fs-videos.rest.media-video',
+            'route_identifier_name' => 'media_video_id',
+            'collection_name' => 'media_video',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \ApiFsVideos\V1\Rest\MediaVideo\MediaVideoEntity::class,
+            'collection_class' => \ApiFsVideos\V1\Rest\MediaVideo\MediaVideoCollection::class,
+            'service_name' => 'media_video',
+        ],
     ],
     'zf-content-negotiation' => [
         'controllers' => [
             'ApiFsVideos\\V1\\Rest\\Media\\Controller' => 'HalJson',
             'ApiFsVideos\\V1\\Rest\\MediaCategory\\Controller' => 'HalJson',
             'ApiFsVideos\\V1\\Rest\\MediaImage\\Controller' => 'HalJson',
+            'ApiFsVideos\\V1\\Rest\\MediaVideo\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'ApiFsVideos\\V1\\Rest\\Media\\Controller' => [
@@ -128,6 +161,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'ApiFsVideos\\V1\\Rest\\MediaVideo\\Controller' => [
+                0 => 'application/vnd.api-fs-videos.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'ApiFsVideos\\V1\\Rest\\Media\\Controller' => [
@@ -139,6 +177,10 @@ return [
                 1 => 'application/json',
             ],
             'ApiFsVideos\\V1\\Rest\\MediaImage\\Controller' => [
+                0 => 'application/vnd.api-fs-videos.v1+json',
+                1 => 'application/json',
+            ],
+            'ApiFsVideos\\V1\\Rest\\MediaVideo\\Controller' => [
                 0 => 'application/vnd.api-fs-videos.v1+json',
                 1 => 'application/json',
             ],
@@ -182,6 +224,18 @@ return [
                 'route_identifier_name' => 'media_image_id',
                 'is_collection' => true,
             ],
+            \ApiFsVideos\V1\Rest\MediaVideo\MediaVideoEntity::class => [
+                'entity_identifier_name' => 'media_id',
+                'route_name' => 'api-fs-videos.rest.media-video',
+                'route_identifier_name' => 'media_video_id',
+                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+            ],
+            \ApiFsVideos\V1\Rest\MediaVideo\MediaVideoCollection::class => [
+                'entity_identifier_name' => 'media_id',
+                'route_name' => 'api-fs-videos.rest.media-video',
+                'route_identifier_name' => 'media_video_id',
+                'is_collection' => true,
+            ],
         ],
     ],
     'zf-apigility' => [
@@ -207,7 +261,15 @@ return [
                 'table_name' => 'media_image',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\Controller',
-                'entity_identifier_name' => 'id',
+                'entity_identifier_name' => 'media_id',
+                'table_service' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\MediaImageResource\\Table',
+            ],
+            'ApiFsVideos\\V1\\Rest\\MediaVideo\\MediaVideoResource' => [
+                'adapter_name' => 'DbAdapter',
+                'table_name' => 'media_video',
+                'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
+                'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaVideo\\Controller',
+                'entity_identifier_name' => 'media_id',
             ],
         ],
     ],
@@ -220,6 +282,9 @@ return [
         ],
         'ApiFsVideos\\V1\\Rest\\MediaImage\\Controller' => [
             'input_filter' => 'ApiFsVideos\\V1\\Rest\\MediaImage\\Validator',
+        ],
+        'ApiFsVideos\\V1\\Rest\\MediaVideo\\Controller' => [
+            'input_filter' => 'ApiFsVideos\\V1\\Rest\\MediaVideo\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -442,6 +507,71 @@ return [
                 'continue_if_empty' => false,
             ],
         ],
+        'ApiFsVideos\\V1\\Rest\\MediaVideo\\Validator' => [
+            0 => [
+                'name' => 'type',
+                'required' => true,
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                    ],
+                ],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => 1,
+                            'max' => '15',
+                        ],
+                    ],
+                ],
+            ],
+            1 => [
+                'name' => 'name',
+                'required' => true,
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                    ],
+                ],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => 1,
+                            'max' => '45',
+                        ],
+                    ],
+                ],
+            ],
+            2 => [
+                'name' => 'path',
+                'required' => true,
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                    ],
+                ],
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'min' => 1,
+                            'max' => '65535',
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ],
     'service_manager' => [
         'factories' => [
@@ -449,7 +579,6 @@ return [
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepository::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepositoryFactory::class,
             'ApiFsVideos\\V1\\Rest\\MediaCategory\\TableGateway' => \ApiFsVideos\V1\Rest\MediaCategory\TableGatewayFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryService::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryServiceFactory::class,
-
             \ApiFsVideos\V1\Rest\Media\MediaResource::class => \ApiFsVideos\V1\Rest\Media\MediaResourceFactory::class,
             \ApiFsVideos\V1\Rest\Media\MediaRepository::class => \ApiFsVideos\V1\Rest\Media\MediaRepositoryFactory::class,
             'ApiFsVideos\\V1\\Rest\\Media\\TableGateway' => \ApiFsVideos\V1\Rest\Media\TableGatewayFactory::class,
