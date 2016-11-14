@@ -7,27 +7,25 @@ use ZF\Rest\AbstractResourceListener;
 class MediaCategoryResource extends AbstractResourceListener
 {
     private $mediaCategoryRepository;
-    private $mediaCategoryService;
 
-    public function __construct(MediaCategoryRepository $mediaCategoryRepository, MediaCategoryService $mediaCategoryService)
+    public function __construct(MediaCategoryRepository $mediaCategoryRepository)
     {
         $this->mediaCategoryRepository = $mediaCategoryRepository;
-        $this->mediaCategoryService = $mediaCategoryService;
     }
 
     public function create($data)
     {
-        return $this->mediaCategoryService->created($data);
+        return false;
     }
 
     public function delete($id)
     {
-        return $this->mediaCategoryService->delete($id);
+        return false;
     }
 
     public function update($id, $data)
     {
-        return $this->mediaCategoryService->update($id, $data);
+        return false;
     }
 
     public function fetch($id)

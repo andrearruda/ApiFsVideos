@@ -10,9 +10,7 @@ class MediaCategoryResourceFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $mediaCategoryRepository = $container->get('ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryRepository');
-        $mediaCategoryService = $container->get('ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryService');
 
-        return new MediaCategoryResource($mediaCategoryRepository, $mediaCategoryService);
+        return new MediaCategoryResource($mediaCategoryRepository);
     }
-
 }
