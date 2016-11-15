@@ -14,6 +14,12 @@ class MediaCategoryRepository
         $this->mediaCategoryTableGateway = $mediaCategoryTableGateway;
     }
 
+    public function insert($data)
+    {
+        $this->mediaCategoryTableGateway->insert($data);
+        return $this->mediaCategoryTableGateway->getLastInsertValue();
+    }
+
     public function update($id, $data)
     {
         return $this->mediaCategoryTableGateway->update($data, array('id' => $id));

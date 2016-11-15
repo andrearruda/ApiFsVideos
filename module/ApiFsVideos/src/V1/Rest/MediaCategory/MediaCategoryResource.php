@@ -17,7 +17,7 @@ class MediaCategoryResource extends AbstractResourceListener
 
     public function create($data)
     {
-        return false;
+        return $this->mediaCategoryService->create($data);
     }
 
     public function delete($id)
