@@ -14,6 +14,11 @@ class MediaCategoryRepository
         $this->mediaCategoryTableGateway = $mediaCategoryTableGateway;
     }
 
+    public function update($id, $data)
+    {
+        return $this->mediaCategoryTableGateway->update($data, array('id' => $id));
+    }
+
     public function find($id)
     {
         $row = $this->mediaCategoryTableGateway->select(function(\Zend\Db\Sql\Select $select) use ($id){
@@ -45,6 +50,4 @@ class MediaCategoryRepository
 
         return new MediaCategoryCollection(new ArrayAdapter($rows->toArray()));
     }
-
-
 }

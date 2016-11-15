@@ -7,10 +7,12 @@ use ZF\Rest\AbstractResourceListener;
 class MediaCategoryResource extends AbstractResourceListener
 {
     private $mediaCategoryRepository;
+    private $mediaCategoryService;
 
-    public function __construct(MediaCategoryRepository $mediaCategoryRepository)
+    public function __construct(MediaCategoryRepository $mediaCategoryRepository, MediaCategoryService $mediaCategoryService)
     {
         $this->mediaCategoryRepository = $mediaCategoryRepository;
+        $this->mediaCategoryService = $mediaCategoryService;
     }
 
     public function create($data)
@@ -20,7 +22,7 @@ class MediaCategoryResource extends AbstractResourceListener
 
     public function delete($id)
     {
-        return false;
+        return $this->mediaCategoryService->delete($id);
     }
 
     public function update($id, $data)
