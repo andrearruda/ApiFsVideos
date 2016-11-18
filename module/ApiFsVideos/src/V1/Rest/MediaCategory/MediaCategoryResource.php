@@ -2,6 +2,8 @@
 
 namespace ApiFsVideos\V1\Rest\MediaCategory;
 
+use ZF\Apigility\Documentation\Api;
+use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
 class MediaCategoryResource extends AbstractResourceListener
@@ -17,17 +19,38 @@ class MediaCategoryResource extends AbstractResourceListener
 
     public function create($data)
     {
-        return $this->mediaCategoryService->create($data);
-    }
+        $result = $this->mediaCategoryService->create($data);
 
-    public function delete($id)
-    {
-        return $this->mediaCategoryService->delete($id);
+        if($result instanceof \Exception)
+        {
+            return new ApiProblem($result->getCode(), $result->getMessage());
+        }
+
+        return $result;
     }
 
     public function update($id, $data)
     {
-        return false;
+        $result = $this->mediaCategoryService->update($id, $data);
+
+        if($result instanceof \Exception)
+        {
+            return new ApiProblem($result->getCode(), $result->getMessage());
+        }
+
+        return $result;
+    }
+
+    public function delete($id)
+    {
+        $result = $this->mediaCategoryService->delete($id);
+
+        if($result instanceof \Exception)
+        {
+            return new ApiProblem($result->getCode(), $result->getMessage());
+        }
+
+        return $result;
     }
 
     public function fetch($id)

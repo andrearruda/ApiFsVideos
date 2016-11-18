@@ -2,7 +2,10 @@
 
 namespace ApiFsVideos\V1\Rest\MediaCategory;
 
+use Herrera\Json\Exception\Exception;
 use Zend\Db\TableGateway\TableGatewayInterface;
+use Zend\Hydrator\ClassMethods;
+use Zend\Hydrator\ObjectProperty;
 
 class MediaCategoryService
 {
@@ -17,24 +20,52 @@ class MediaCategoryService
 
     public function create($data)
     {
-        $set = array(
-            'name' => $data->name,
-            'created_at' => (new \DateTime())->format('Y-m-d H:i:s'),
-            'updated_at' => (new \DateTime())->format('Y-m-d H:i:s'),
-            'active' => false
-        );
-
         $connection = null;
         try{
             $connection = $this->mediaCategoryTableGateway->getAdapter()->getDriver()->getConnection();
             $connection->beginTransaction();
 
+            $set = (new ObjectProperty())->extract($data);
+            $set['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
+            $set['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
             $result = $this->mediaCategoryRepository->insert($set);
 
             $connection->commit();
 
             return array('id' => $result);
-        }catch (\Exception $e) {
+        }catch (\Exception $e){
+            if ($connection instanceof \Zend\Db\Adapter\Driver\ConnectionInterface) {
+                $connection->rollback();
+            }
+
+            return $e;
+        }
+    }
+
+    public function update($id, $data)
+    {
+        $connection = null;
+        try{
+            $row = $this->mediaCategoryRepository->find($id);
+
+            if($row instanceof \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryEntity)
+            {
+                $connection = $this->mediaCategoryTableGateway->getAdapter()->getDriver()->getConnection();
+                $connection->beginTransaction();
+
+                $set = (new ObjectProperty())->extract($data);
+                $set['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
+                $this->mediaCategoryRepository->update($id, $set);
+
+                $connection->commit();
+
+                return array('id' => $id);
+            }
+            else
+            {
+                throw new \Exception('Entity not found.', 404);
+            }
+        }catch (\Exception $e){
             if ($connection instanceof \Zend\Db\Adapter\Driver\ConnectionInterface) {
                 $connection->rollback();
             }
@@ -51,14 +82,14 @@ class MediaCategoryService
 
             if($row instanceof \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryEntity)
             {
-                $data = array(
+                $set = array(
                     'deleted_at' => (new \DateTime())->format('Y-m-d H:i:s')
                 );
 
                 $connection = $this->mediaCategoryTableGateway->getAdapter()->getDriver()->getConnection();
                 $connection->beginTransaction();
 
-                $this->mediaCategoryRepository->update($id, $data);
+                $this->mediaCategoryRepository->update($id, $set);
 
                 $connection->commit();
 
@@ -66,7 +97,7 @@ class MediaCategoryService
             }
             else
             {
-                return false;
+                throw new \Exception('Entity not found.', 404);
             }
         }catch (\Exception $e){
             if ($connection instanceof \Zend\Db\Adapter\Driver\ConnectionInterface) {
