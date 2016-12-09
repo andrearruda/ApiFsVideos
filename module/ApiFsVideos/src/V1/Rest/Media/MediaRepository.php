@@ -43,9 +43,9 @@ class MediaRepository
         return $row->current();
     }
 
-    public function findAll()
+    public function findAll($params)
     {
-        $rows = $this->mediaTableGateway->select(function(\Zend\Db\Sql\Select $select){
+        $rows = $this->mediaTableGateway->select(function(\Zend\Db\Sql\Select $select) use ($params){
             $select->columns(array(
                 'id',
                 'media_category_id',
@@ -55,7 +55,26 @@ class MediaRepository
                 'active'
             ));
             $select->where(array('deleted_at' => null));
-            $select->order('id DESC');
+
+            $sort_by = 'id';
+            $sort_order = 'DESC';
+
+            if(!is_null($params->get('sort_by')))
+            {
+                $field = strtolower($params->get('sort_by'));
+                $fields = array('id', 'name');
+                $sort_by = in_array($field, $fields) ? $field : 'id';
+            }
+
+            if(!is_null($params->get('sort_order')))
+            {
+                $orderDirection = strtoupper($params->get('sort_order'));
+                $sort_order = in_array($orderDirection, array('ASC', 'DESC')) ? $orderDirection : '';
+            }
+
+            $select->order(array(
+                $sort_by => $sort_order
+            ));
         });
 
         return new MediaCollection(new ArrayAdapter($rows->toArray()));

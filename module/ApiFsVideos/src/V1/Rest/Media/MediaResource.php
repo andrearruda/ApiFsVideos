@@ -59,6 +59,6 @@ class MediaResource extends AbstractResourceListener
 
     public function fetchAll($params = [])
     {
-        return $this->mediaRepository->findAll();
+        return $this->mediaRepository->findAll($params);
     }
 }
