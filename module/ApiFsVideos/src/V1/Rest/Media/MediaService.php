@@ -1,32 +1,32 @@
 <?php
 
-namespace ApiFsVideos\V1\Rest\MediaCategory;
+namespace ApiFsVideos\V1\Rest\Media;
 
 use Zend\Db\TableGateway\TableGatewayInterface;
 use Zend\Hydrator\ObjectProperty;
 
-class MediaCategoryService
+class MediaService
 {
-    private $mediaCategoryRepository;
-    private $mediaCategoryTableGateway;
+    private $mediaRepository;
+    private $mediaTableGateway;
 
-    public function __construct(MediaCategoryRepository $mediaCategoryRepository, TableGatewayInterface $mediaCategoryTableGateway)
+    public function __construct(MediaRepository $mediaRepository, TableGatewayInterface $mediaTableGateway)
     {
-        $this->mediaCategoryRepository = $mediaCategoryRepository;
-        $this->mediaCategoryTableGateway = $mediaCategoryTableGateway;
+        $this->mediaRepository = $mediaRepository;
+        $this->mediaTableGateway = $mediaTableGateway;
     }
 
     public function create($data)
     {
         $connection = null;
         try{
-            $connection = $this->mediaCategoryTableGateway->getAdapter()->getDriver()->getConnection();
+            $connection = $this->mediaTableGateway->getAdapter()->getDriver()->getConnection();
             $connection->beginTransaction();
 
             $set = (new ObjectProperty())->extract($data);
             $set['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
             $set['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
-            $result = $this->mediaCategoryRepository->insert($set);
+            $result = $this->mediaRepository->insert($set);
 
             $connection->commit();
 
@@ -44,16 +44,16 @@ class MediaCategoryService
     {
         $connection = null;
         try{
-            $row = $this->mediaCategoryRepository->find($id);
+            $row = $this->mediaRepository->find($id);
 
-            if($row instanceof \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryEntity)
+            if($row instanceof \ApiFsVideos\V1\Rest\Media\MediaEntity)
             {
-                $connection = $this->mediaCategoryTableGateway->getAdapter()->getDriver()->getConnection();
+                $connection = $this->mediaTableGateway->getAdapter()->getDriver()->getConnection();
                 $connection->beginTransaction();
 
                 $set = (new ObjectProperty())->extract($data);
                 $set['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
-                $this->mediaCategoryRepository->update($id, $set);
+                $this->mediaRepository->update($id, $set);
 
                 $connection->commit();
 
@@ -76,18 +76,18 @@ class MediaCategoryService
     {
         $connection = null;
         try{
-            $row = $this->mediaCategoryRepository->find($id);
+            $row = $this->mediaRepository->find($id);
 
-            if($row instanceof \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryEntity)
+            if($row instanceof \ApiFsVideos\V1\Rest\Media\MediaEntity)
             {
                 $set = array(
                     'deleted_at' => (new \DateTime())->format('Y-m-d H:i:s')
                 );
 
-                $connection = $this->mediaCategoryTableGateway->getAdapter()->getDriver()->getConnection();
+                $connection = $this->mediaTableGateway->getAdapter()->getDriver()->getConnection();
                 $connection->beginTransaction();
 
-                $this->mediaCategoryRepository->update($id, $set);
+                $this->mediaRepository->update($id, $set);
 
                 $connection->commit();
 

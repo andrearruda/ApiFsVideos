@@ -1,24 +1,24 @@
 <?php
 
-namespace ApiFsVideos\V1\Rest\MediaCategory;
+namespace ApiFsVideos\V1\Rest\Media;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
-class MediaCategoryResource extends AbstractResourceListener
+class MediaResource extends AbstractResourceListener
 {
-    private $mediaCategoryRepository;
-    private $mediaCategoryService;
+    private $mediaRepository;
+    private $mediaService;
 
-    public function __construct(MediaCategoryRepository $mediaCategoryRepository, MediaCategoryService $mediaCategoryService)
+    public function __construct(MediaRepository $mediaRepository, MediaService $mediaService)
     {
-        $this->mediaCategoryRepository = $mediaCategoryRepository;
-        $this->mediaCategoryService = $mediaCategoryService;
+        $this->mediaRepository = $mediaRepository;
+        $this->mediaService = $mediaService;
     }
 
     public function create($data)
     {
-        $result = $this->mediaCategoryService->create($data);
+        $result = $this->mediaService->create($data);
 
         if($result instanceof \Exception)
         {
@@ -30,7 +30,7 @@ class MediaCategoryResource extends AbstractResourceListener
 
     public function update($id, $data)
     {
-        $result = $this->mediaCategoryService->update($id, $data);
+        $result = $this->mediaService->update($id, $data);
 
         if($result instanceof \Exception)
         {
@@ -42,7 +42,7 @@ class MediaCategoryResource extends AbstractResourceListener
 
     public function delete($id)
     {
-        $result = $this->mediaCategoryService->delete($id);
+        $result = $this->mediaService->delete($id);
 
         if($result instanceof \Exception)
         {
@@ -54,11 +54,11 @@ class MediaCategoryResource extends AbstractResourceListener
 
     public function fetch($id)
     {
-        return $this->mediaCategoryRepository->find($id);
+        return $this->mediaRepository->find($id);
     }
 
     public function fetchAll($params = [])
     {
-        return $this->mediaCategoryRepository->findAll();
+        return $this->mediaRepository->findAll();
     }
 }

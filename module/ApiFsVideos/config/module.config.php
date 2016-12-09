@@ -116,7 +116,7 @@ return [
             'service_name' => 'media_category',
         ],
         'ApiFsVideos\\V1\\Rest\\Media\\Controller' => [
-            'listener' => 'ApiFsVideos\\V1\\Rest\\Media\\MediaResource',
+            'listener' => \ApiFsVideos\V1\Rest\Media\MediaResource::class,
             'route_name' => 'api-fs-videos.rest.media',
             'route_identifier_name' => 'media_id',
             'collection_name' => 'media',
@@ -262,7 +262,7 @@ return [
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaCategory\\Controller',
                 'entity_identifier_name' => 'id',
             ],
-            'ApiFsVideos\\V1\\Rest\\Media\\MediaResource' => [
+            \ApiFsVideos\V1\Rest\Media\MediaResource::class => [
                 'adapter_name' => 'DbAdapter',
                 'table_name' => 'media',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
@@ -353,13 +353,13 @@ return [
             ],
             3 => [
                 'name' => 'created_at',
-                'required' => true,
+                'required' => false,
                 'filters' => [],
                 'validators' => [],
             ],
             4 => [
                 'name' => 'updated_at',
-                'required' => true,
+                'required' => false,
                 'filters' => [],
                 'validators' => [],
             ],
@@ -371,7 +371,7 @@ return [
             ],
             6 => [
                 'name' => 'active',
-                'required' => true,
+                'required' => false,
                 'filters' => [
                     0 => [
                         'name' => \Zend\Filter\StripTags::class,
@@ -575,6 +575,10 @@ return [
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepository::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepositoryFactory::class,
             'ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryTableGateway' => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryTableGatewayFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryService::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryServiceFactory::class,
+            \ApiFsVideos\V1\Rest\Media\MediaResource::class => \ApiFsVideos\V1\Rest\Media\MediaResourceFactory::class,
+            \ApiFsVideos\V1\Rest\Media\MediaRepository::class => \ApiFsVideos\V1\Rest\Media\MediaRepositoryFactory::class,
+            'ApiFsVideos\\V1\\Rest\\Media\\MediaTableGateway' => \ApiFsVideos\V1\Rest\Media\MediaTableGatewayFactory::class,
+            \ApiFsVideos\V1\Rest\Media\MediaService::class => \ApiFsVideos\V1\Rest\Media\MediaServiceFactory::class,
         ],
     ],
 ];
