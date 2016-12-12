@@ -237,6 +237,11 @@ return [
                 'route_name' => 'api-fs-videos.rest.media',
                 'route_identifier_name' => 'media_id',
                 'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+                'route_params' => [
+                    'teste' => array(
+                        'oi'
+                    )
+                ]
             ],
             \ApiFsVideos\V1\Rest\Media\MediaCollection::class => [
                 'entity_identifier_name' => 'id',
@@ -583,11 +588,12 @@ return [
         'factories' => [
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResourceFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepository::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepositoryFactory::class,
-            'ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryTableGateway' => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryTableGatewayFactory::class,
+            \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryTableGateway::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryTableGatewayFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryService::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryServiceFactory::class,
+
             \ApiFsVideos\V1\Rest\Media\MediaResource::class => \ApiFsVideos\V1\Rest\Media\MediaResourceFactory::class,
             \ApiFsVideos\V1\Rest\Media\MediaRepository::class => \ApiFsVideos\V1\Rest\Media\MediaRepositoryFactory::class,
-            'ApiFsVideos\\V1\\Rest\\Media\\MediaTableGateway' => \ApiFsVideos\V1\Rest\Media\MediaTableGatewayFactory::class,
+            \ApiFsVideos\V1\Rest\Media\MediaTableGateway::class => \ApiFsVideos\V1\Rest\Media\MediaTableGatewayFactory::class,
             \ApiFsVideos\V1\Rest\Media\MediaService::class => \ApiFsVideos\V1\Rest\Media\MediaServiceFactory::class,
         ],
     ],
