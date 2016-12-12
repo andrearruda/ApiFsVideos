@@ -108,7 +108,11 @@ return [
                 0 => 'GET',
                 1 => 'POST',
             ],
-            'collection_query_whitelist' => [],
+            'collection_query_whitelist' => [
+                0 => 'sort_by',
+                1 => 'sort_order',
+                2 => 'fields',
+            ],
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryEntity::class,
@@ -133,6 +137,7 @@ return [
             'collection_query_whitelist' => [
                 0 => 'sort_by',
                 1 => 'sort_order',
+                2 => 'fields',
             ],
             'page_size' => 25,
             'page_size_param' => null,
@@ -264,6 +269,7 @@ return [
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'ApiFsVideos\\V1\\Rest\\MediaCategory\\Controller',
                 'entity_identifier_name' => 'id',
+                'table_service' => 'ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryResource\\Table',
             ],
             \ApiFsVideos\V1\Rest\Media\MediaResource::class => [
                 'adapter_name' => 'DbAdapter',
@@ -577,12 +583,11 @@ return [
         'factories' => [
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResource::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryResourceFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepository::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryRepositoryFactory::class,
-            \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryTableGateway::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryTableGatewayFactory::class,
+            'ApiFsVideos\\V1\\Rest\\MediaCategory\\MediaCategoryTableGateway' => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryTableGatewayFactory::class,
             \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryService::class => \ApiFsVideos\V1\Rest\MediaCategory\MediaCategoryServiceFactory::class,
-
             \ApiFsVideos\V1\Rest\Media\MediaResource::class => \ApiFsVideos\V1\Rest\Media\MediaResourceFactory::class,
             \ApiFsVideos\V1\Rest\Media\MediaRepository::class => \ApiFsVideos\V1\Rest\Media\MediaRepositoryFactory::class,
-            \ApiFsVideos\V1\Rest\Media\MediaTableGateway::class => \ApiFsVideos\V1\Rest\Media\MediaTableGatewayFactory::class,
+            'ApiFsVideos\\V1\\Rest\\Media\\MediaTableGateway' => \ApiFsVideos\V1\Rest\Media\MediaTableGatewayFactory::class,
             \ApiFsVideos\V1\Rest\Media\MediaService::class => \ApiFsVideos\V1\Rest\Media\MediaServiceFactory::class,
         ],
     ],

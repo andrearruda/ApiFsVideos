@@ -43,17 +43,30 @@ class MediaRepository
         return $row->current();
     }
 
-    public function findAll($params)
+    public function findAll($params = [])
     {
         $rows = $this->mediaTableGateway->select(function(\Zend\Db\Sql\Select $select) use ($params){
-            $select->columns(array(
-                'id',
-                'media_category_id',
-                'name',
-                'description',
-                'created_at', 'updated_at',
-                'active'
-            ));
+
+            $columns = array(
+                'id', 'media_category_id', 'name', 'description', 'created_at', 'updated_at', 'active'
+            );
+
+            if(!is_null($params->get('fields')))
+            {
+                $fields = explode(',' ,$params->get('fields'));
+
+                foreach ($fields as $key => $field)
+                {
+                    if(in_array($field, $columns) === false)
+                    {
+                        unset($fields[$key]);
+                    }
+                }
+
+                $columns = $fields;
+            }
+
+            $select->columns($columns);
             $select->where(array('deleted_at' => null));
 
             $sort_by = 'id';

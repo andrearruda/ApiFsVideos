@@ -41,17 +41,51 @@ class MediaCategoryRepository
         return $row->current();
     }
 
-    public function findAll()
+    public function findAll($params = [])
     {
-        $rows = $this->mediaCategoryTableGateway->select(function(\Zend\Db\Sql\Select $select){
-            $select->columns(array(
-                'id',
-                'name',
-                'created_at', 'updated_at',
-                'active'
-            ));
+        $rows = $this->mediaCategoryTableGateway->select(function(\Zend\Db\Sql\Select $select) use ($params){
+
+            $columns = array(
+                'id', 'name', 'created_at', 'updated_at', 'active'
+            );
+
+            if(!is_null($params->get('fields')))
+            {
+                $fields = explode(',' ,$params->get('fields'));
+
+                foreach ($fields as $key => $field)
+                {
+                    if(in_array($field, $columns) === false)
+                    {
+                        unset($fields[$key]);
+                    }
+                }
+
+                $columns = $fields;
+            }
+
+            $select->columns($columns);
             $select->where(array('deleted_at' => null));
-            $select->order('id DESC');
+
+            $sort_by = 'id';
+            $sort_order = 'DESC';
+
+            if(!is_null($params->get('sort_by')))
+            {
+                $field = strtolower($params->get('sort_by'));
+                $fields = array('id', 'name');
+                $sort_by = in_array($field, $fields) ? $field : 'id';
+            }
+
+            if(!is_null($params->get('sort_order')))
+            {
+                $orderDirection = strtoupper($params->get('sort_order'));
+                $sort_order = in_array($orderDirection, array('ASC', 'DESC')) ? $orderDirection : '';
+            }
+
+            $select->order(array(
+                $sort_by => $sort_order
+            ));
         });
 
         return new MediaCategoryCollection(new ArrayAdapter($rows->toArray()));
