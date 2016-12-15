@@ -17,7 +17,7 @@ class MediaCategoryRepository
     public function insert($data)
     {
         $this->mediaCategoryTableGateway->insert($data);
-        return $this->mediaCategoryTableGateway->getLastInsertValue();
+        return $data['id'];
     }
 
     public function update($id, $data)
@@ -67,13 +67,13 @@ class MediaCategoryRepository
             $select->columns($columns);
             $select->where(array('deleted_at' => null));
 
-            $sort_by = 'id';
-            $sort_order = 'DESC';
+            $sort_by = 'name';
+            $sort_order = 'ASC';
 
             if(!is_null($params->get('sort_by')))
             {
                 $field = strtolower($params->get('sort_by'));
-                $fields = array('id', 'name');
+                $fields = array('created_at', 'updated_at', 'name');
                 $sort_by = in_array($field, $fields) ? $field : 'id';
             }
 
