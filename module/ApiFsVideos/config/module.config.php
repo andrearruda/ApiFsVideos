@@ -307,10 +307,10 @@ return [
                 'required' => true,
                 'filters' => [
                     0 => [
-                        'name' => \Zend\Filter\StripTags::class,
+                        'name' => \Zend\Filter\StringTrim::class,
                     ],
                     1 => [
-                        'name' => \Zend\Filter\Digits::class,
+                        'name' => \Zend\Filter\StripTags::class,
                     ],
                 ],
                 'validators' => [

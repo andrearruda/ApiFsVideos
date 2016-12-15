@@ -17,7 +17,7 @@ class MediaRepository
     public function insert($data)
     {
         $this->mediaTableGateway->insert($data);
-        return $this->mediaTableGateway->getLastInsertValue();
+        return $data['id'];
     }
 
     public function update($id, $data)

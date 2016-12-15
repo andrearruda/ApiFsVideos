@@ -4,6 +4,8 @@ namespace ApiFsVideos\V1\Rest\Media;
 
 use Zend\Db\TableGateway\TableGatewayInterface;
 use Zend\Hydrator\ObjectProperty;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 
 class MediaService
 {
@@ -24,6 +26,7 @@ class MediaService
             $connection->beginTransaction();
 
             $set = (new ObjectProperty())->extract($data);
+            $set['id'] = Uuid::uuid4()->toString();
             $set['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
             $set['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
             $result = $this->mediaRepository->insert($set);
