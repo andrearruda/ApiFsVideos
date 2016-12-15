@@ -237,6 +237,11 @@ return [
                 'route_name' => 'api-fs-videos.rest.media',
                 'route_identifier_name' => 'media_id',
                 'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+                'route_params' => [
+                    'teste' => array(
+                        'oi'
+                    )
+                ]
             ],
             \ApiFsVideos\V1\Rest\Media\MediaCollection::class => [
                 'entity_identifier_name' => 'id',
